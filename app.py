@@ -69,7 +69,7 @@ def index():
             time_of_day = 'night' if hour < 5 or hour > 22 else time_of_day
             cities.append({'city': city.name, 'temp': temp, 'state': state, 'time_of_day': time_of_day, 'city_id': city.id})
         else:
-            return f"Error: {response.status_code}, {response.text}"
+            flash(f"Error: {response.status_code}, {response.text}")
     return render_template('index.html', cities=cities)
 
 
