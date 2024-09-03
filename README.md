@@ -1,6 +1,7 @@
 # Weather-App-Flask
 
 Educational one-page Weather web app created using Python & Flask framework.
+SQLite database is used for storage.
 
 Uses [OpenWeatherMap API](https://openweathermap.org/) to get real-time weather information.
 
