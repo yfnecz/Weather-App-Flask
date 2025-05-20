@@ -11,13 +11,11 @@ To run:
 2) add api.key file to the root folder containing your API key to Open Weather Map API
 3) use docker to build image:
 
-`docker build .`
+`docker build -t weather-app .`
 
 5) use docker to run locally:
 
-`docker images`
-
-`docker run -p 8080:8080 <your image id>`
+`docker run -p 8080:8080 weather-app`
 
 Here is how the app looks and works:
 
