@@ -17,6 +17,8 @@ To run:
 
 `docker run -p 8080:8080 weather-app`
 
+6) open http://127.0.0.1:8080
+
 Here is how the app looks and works:
 
 ![ezgif-1-a27cc7d58c](https://github.com/user-attachments/assets/15819ef4-637d-45a4-b4d6-3c272cbf2c44)
