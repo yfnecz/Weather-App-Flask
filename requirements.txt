@@ -1,8 +1,6 @@
 Flask
 flask_restful
-pyppeteer
 urllib3
 requests
 Flask-SQLAlchemy
-nest-asyncio
 geopy

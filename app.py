@@ -31,7 +31,7 @@ parser.add_argument(
 weather_api_key = ''
 weather_codes = []
 
-with open("/Users/Natali/Documents/work/PycharmProjects/Weather App/Weather App/api.key", "r") as api_file:
+with open("api.key", "r") as api_file:
     weather_api_key = api_file.readline()
 
 geolocator = Nominatim(user_agent="abcd")
@@ -89,5 +89,5 @@ if __name__ == '__main__':
         arg_host, arg_port = sys.argv[1].split(':')
         app.run(host=arg_host, port=arg_port)
     else:
-        app.run()
+        app.run(host='0.0.0.0', port=8080, debug=True)
 
