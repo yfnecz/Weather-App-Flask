@@ -1,7 +1,8 @@
-https://github.com/hyperskill/hs-test-python/archive/release.tar.gz
 Flask
+flask_restful
 pyppeteer
 urllib3
 requests
 Flask-SQLAlchemy
 nest-asyncio
+geopy
