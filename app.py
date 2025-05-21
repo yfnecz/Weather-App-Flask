@@ -44,6 +44,7 @@ geolocator = Nominatim(user_agent="abcd")
 @app.route('/', methods=['GET', 'POST'])
 def index():
     cities = []
+    new_name = ''
     if request.method == 'POST':
         new_name = request.form.get('city_name')
         if City.query.filter_by(name=new_name).first() is None:
@@ -59,7 +60,8 @@ def index():
     api_url = 'https://api.openweathermap.org/data/2.5/weather?lat={}&lon={}&units=metric&appid={}'
     for city in City.query.all():
         if city.timestamp is None or city.timestamp + datetime.timedelta(hours=1) < datetime.datetime.now():
-            location = geolocator.geocode(city.name)
+            if city.name != new_name:
+                location = geolocator.geocode(city.name)
             response = requests.get(api_url.format(location.latitude, location.longitude, weather_api_key))
             if response.status_code == requests.codes.ok:
                 weather = json.loads(response.text)
