@@ -9,7 +9,7 @@ Uses [OpenWeatherMap API](https://openweathermap.org/) to get real-time weather 
 Deployed using Render here:
 [Check it out](https://weather-app-flask-2f3w.onrender.com/)
 
-To run:
+To run locally with Docker:
 1) clone the repo
 2) add api.key file to the root folder containing your API key to Open Weather Map API
 3) use docker to build image:
