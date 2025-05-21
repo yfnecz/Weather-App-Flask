@@ -6,6 +6,9 @@ SQLite database is used for data storage.
 
 Uses [OpenWeatherMap API](https://openweathermap.org/) to get real-time weather information.
 
+Deployed using Render here:
+[Check it out](https://weather-app-flask-2f3w.onrender.com/)
+
 To run:
 1) clone the repo
 2) add api.key file to the root folder containing your API key to Open Weather Map API
