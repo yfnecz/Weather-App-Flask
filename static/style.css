@@ -8,6 +8,7 @@
 	margin-bottom: 2vw;
 	justify-content: center;
 }
+
 .card {
 	padding: 0;
 	border: none;
@@ -168,12 +169,12 @@ input {
 
 ::-webkit-scrollbar {
   width: 0.5vw;
-
   background:-webkit-linear-gradient(0, blue 50%, white 100%);
 }
 
 ::-webkit-scrollbar-track {
-  background:  linear-gradient(0deg, #836273 0%, #373252 100%);
+	background: linear-gradient(0deg, #836273 0%, #373252 100%);
+}
 
 ::-webkit-scrollbar-thumb {
   background: #888;
@@ -181,5 +182,40 @@ input {
 
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
+}
+
+#suggestions {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: white;
+    color: black;
+    border: 1px solid #ccc;
+    border-top: none;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 1000;
+    list-style: none;   /* ✅ removes bullets */
+    margin: 0;
+    padding: 0;
+    font-size: 1vw;
+    box-shadow: 0 0 0.5vw rgba(0, 0, 0, 0.2);
+    border-radius: 0 0 5px 5px;
+}
+
+#suggestions li {
+    padding: 0.5vw;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+#suggestions li:hover {
+    background-color: #f0f0f0;
+}
+
+.input-wrapper {
+    position: relative;
+    display: inline-block;
 }
 

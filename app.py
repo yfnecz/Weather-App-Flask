@@ -1,5 +1,5 @@
 import sys, requests, json, datetime
-from flask import Flask, render_template, request, redirect, flash
+from flask import Flask, render_template, request, redirect, flash, jsonify
 from flask_restful import reqparse
 from geopy.geocoders import Nominatim
 from flask_sqlalchemy import SQLAlchemy
@@ -35,11 +35,38 @@ parser.add_argument(
 weather_api_key = ''
 weather_codes = []
 
-with open("api.key", "r") as api_file:
-    weather_api_key = api_file.readline()
+with open("api.key", "r") as w_api_file:
+    weather_api_key = w_api_file.readline()
+
+with open("city-api.key", "r") as c_api_file:
+    city_api_key = c_api_file.readline()
 
 geolocator = Nominatim(user_agent="abcd")
 
+@app.route('/autocomplete')
+def autocomplete():
+    query = request.args.get('q', '')
+    if len(query) < 2:
+        return jsonify([])  # Return empty list if less than 2 chars
+
+    url = "https://wft-geo-db.p.rapidapi.com/v1/geo/cities"
+    headers = {
+        "X-RapidAPI-Key": city_api_key,
+        "X-RapidAPI-Host": "wft-geo-db.p.rapidapi.com"
+    }
+    params = {
+        "namePrefix": query,
+        "limit": 5
+    }
+
+    response = requests.get(url, headers=headers, params=params)
+
+    if response.status_code == 200:
+        cities = response.json().get('data', [])
+        city_names = [city['city'] for city in cities]
+        return jsonify(city_names)
+    else:
+        return jsonify([]), response.status_code
 
 @app.route('/', methods=['GET', 'POST'])
 def index():

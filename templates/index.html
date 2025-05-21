@@ -20,11 +20,15 @@
     </div>
     {% endif %}
     {% endwith %}
-    <form action="/" method="POST">
-        <input type="text" placeholder="Enter a city name" name="city_name" id="input-city">
+    <form action="/" method="POST" autocomplete="off">
+        <div class="input-wrapper">
+            <input type="text" placeholder="Enter a city name" name="city_name" id="input-city">
+            <ul id="suggestions"></ul>
+        </div>
         <button type="submit" class="submit-button">Add</button>
     </form>
 </div>
+
 <div class="cards">
     {% for city in cities %}
     <div class="card {{ city.picture }}">
@@ -41,5 +45,49 @@
     </div>
     {% endfor %}
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const input = document.getElementById('input-city');
+        const suggestions = document.getElementById('suggestions');
+
+        input.addEventListener('input', () => {
+            const query = input.value.trim();
+
+            if (query.length < 2) {
+                suggestions.innerHTML = '';
+                return;
+            }
+
+            fetch(`/autocomplete?q=${encodeURIComponent(query)}`)
+                .then(res => res.json())
+                .then(data => {
+                    suggestions.innerHTML = '';
+                    data.forEach(city => {
+                        const li = document.createElement('li');
+                        li.textContent = city;
+                        li.style.padding = '5px 10px';
+
+                        li.addEventListener('click', () => {
+                            input.value = city;
+                            suggestions.innerHTML = '';
+                        });
+
+                        suggestions.appendChild(li);
+                    });
+                })
+                .catch(() => {
+                    suggestions.innerHTML = '';
+                });
+        });
+
+        document.addEventListener('click', e => {
+            if (e.target !== input) {
+                suggestions.innerHTML = '';
+            }
+        });
+    });
+</script>
+
 </body>
 </html>
