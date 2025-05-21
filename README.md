@@ -4,15 +4,17 @@ Educational one-page Weather web app created using Python & Flask framework.
 
 SQLite database is used for data storage.
 
+# Deployed using Render here: [Check it out](https://weather-app-flask-2f3w.onrender.com/)
+
 Uses [OpenWeatherMap API](https://openweathermap.org/) to get real-time weather information.
 
-Deployed using Render here:
-[Check it out](https://weather-app-flask-2f3w.onrender.com/)
+Uses [Rapid API GeoDB](https://rapidapi.com/wirefreethought/api/geodb-cities) for city auto-completion suggestions.
 
 To run locally with Docker:
 1) clone the repo
 2) add api.key file to the root folder containing your API key to Open Weather Map API
-3) use docker to build image:
+3) add city-api.key file to the root folder containing your API key for Rapid API GeoDB
+4) use docker to build image:
 
 `docker build -t weather-app .`
 
