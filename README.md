@@ -1,4 +1,4 @@
-# Weather-App-Flask
+# [Weather-App-Flask](https://weather-app-flask-2f3w.onrender.com/)
 
 Educational one-page Weather web app created using Python & Flask framework.
 
@@ -6,7 +6,10 @@ SQLite database is used for data storage.
 
 Uses [OpenWeatherMap API](https://openweathermap.org/) to get real-time weather information.
 
-To run:
+Deployed using Render here:
+[Check it out](https://weather-app-flask-2f3w.onrender.com/)
+
+To run locally with Docker:
 1) clone the repo
 2) add api.key file to the root folder containing your API key to Open Weather Map API
 3) use docker to build image:
