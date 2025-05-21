@@ -27,7 +27,7 @@
 </div>
 <div class="cards">
     {% for city in cities %}
-    <div class="card {{ city.time_of_day }}">
+    <div class="card {{ city.picture }}">
         <div class="delete-wrapper">
             <form action="/delete/{{ city.city_id }}" method="POST">
                 <input type="hidden" name="city_id" value="{{ city.city_id }}">

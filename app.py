@@ -16,6 +16,10 @@ class City(db.Model):
     __tablename__ = 'city'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), unique=True, nullable=False)
+    timestamp = db.Column(db.DateTime, nullable=True)
+    temperature = db.Column(db.Integer, nullable=True)
+    state = db.Column(db.String(80), nullable=True)
+    picture = db.Column(db.String(80), nullable=True)
 
 
 db.create_all()
@@ -54,22 +58,39 @@ def index():
             flash("The city has already been added to the list!")
     api_url = 'https://api.openweathermap.org/data/2.5/weather?lat={}&lon={}&units=metric&appid={}'
     for city in City.query.all():
-        location = geolocator.geocode(city.name)
-        response = requests.get(api_url.format(location.latitude, location.longitude, weather_api_key))
-        if response.status_code == requests.codes.ok:
-            weather = json.loads(response.text)
-            temp = int(weather['main']['temp'])
-            state = weather['weather'][0]['main']
+        if city.timestamp is None or city.timestamp + datetime.timedelta(hours=1) < datetime.datetime.now():
+            location = geolocator.geocode(city.name)
+            response = requests.get(api_url.format(location.latitude, location.longitude, weather_api_key))
+            if response.status_code == requests.codes.ok:
+                weather = json.loads(response.text)
+                temp = int(weather['main']['temp'])
+                state = weather['weather'][0]['main']
 
-            utc_now = datetime.datetime.fromtimestamp(weather['dt']) # time in utc seconds
-            timezone = datetime.timezone(datetime.timedelta(seconds=weather['timezone']))
-            hour = utc_now.astimezone(timezone).hour
+                utc_now = datetime.datetime.fromtimestamp(weather['dt']) # time in utc seconds
+                timezone = datetime.timezone(datetime.timedelta(seconds=weather['timezone']))
+                hour = utc_now.astimezone(timezone).hour
 
-            time_of_day = 'day' if 19 > hour > 11 else 'evening-morning'
-            time_of_day = 'night' if hour < 5 or hour > 22 else time_of_day
-            cities.append({'city': city.name, 'temp': temp, 'state': state, 'time_of_day': time_of_day, 'city_id': city.id})
+                picture = 'day' if 19 > hour > 11 else 'evening-morning'
+                picture = 'night' if hour < 5 or hour > 22 else picture
+
+                if picture == 'day' or picture == 'evening-morning':
+                    if 'rain' in state.lower():
+                        picture = 'rain'
+                    elif 'cloud' in state.lower():
+                        picture = 'clouds'
+                    elif 'snow' in state.lower():
+                        picture = 'snow'
+
+                cities.append({'city': city.name, 'temp': temp, 'state': state, 'picture': picture, 'city_id': city.id})
+                city.temperature = temp
+                city.state = state
+                city.picture = picture
+                city.timestamp = datetime.datetime.now()
+                db.session.commit()
+            else:
+                flash(f"Error: {response.status_code}, {response.text}")
         else:
-            flash(f"Error: {response.status_code}, {response.text}")
+            cities.append({'city': city.name, 'temp': city.temperature, 'state': city.state, 'picture': city.picture, 'city_id': city.id})
     return render_template('index.html', cities=cities)
 
 
