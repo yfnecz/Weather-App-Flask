@@ -3,3 +3,4 @@ Dockerfile
 .gitignore
 .venv
 README.md
+.idea
