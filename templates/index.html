@@ -71,6 +71,7 @@
                         li.addEventListener('click', () => {
                             input.value = city;
                             suggestions.innerHTML = '';
+                            input.form.submit();
                         });
 
                         suggestions.appendChild(li);
