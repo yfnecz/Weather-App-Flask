@@ -84,8 +84,8 @@ def index():
                     db.session.commit()
                 else:
                     flash("The city doesn't exist!")
-            except GeocoderServiceError as e:
-                flash(f"Some cities failed to load due to Geocoder free API request limit {e}")
+            except GeocoderServiceError:
+                flash(f"Some cities failed to load due to Geocoder free API request limit")
         else:
             flash("The city has already been added to the list!")
     api_url = 'https://api.openweathermap.org/data/2.5/weather?lat={}&lon={}&units=metric&appid={}'
@@ -123,8 +123,8 @@ def index():
                     db.session.commit()
                 else:
                     flash(f"Error: {response.status_code}, {response.text}")
-            except GeocoderServiceError as e:
-                flash(f"Some cities failed to load due to Geocoder free API request limit {e}")
+            except GeocoderServiceError:
+                flash(f"Some cities failed to load due to Geocoder free API request limit")
         else:
             cities.append({'city': city.name, 'temp': city.temperature, 'state': city.state, 'picture': city.picture, 'city_id': city.id})
     return render_template('index.html', cities=cities)
